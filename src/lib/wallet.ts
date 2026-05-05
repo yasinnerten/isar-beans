@@ -21,12 +21,12 @@ export function buildPassJson(data: PassData): object {
     passTypeIdentifier: data.passTypeId || "pass.com.isarbeans.loyalty",
     serialNumber: data.serialNumber,
     teamIdentifier: process.env.APPLE_TEAM_IDENTIFIER || "ISARBEANS",
-    organizationName: "Isar Beans",
+    organizationName: "grabthebeans",
     description: `${data.shopName} Loyalty Card`,
     backgroundColor: "rgb(92,51,23)",
     foregroundColor: "rgb(255,222,173)",
     labelColor: "rgb(255,200,120)",
-    logoText: "Isar Beans",
+    logoText: "grabthebeans",
     authenticationToken: data.authToken,
     webServiceURL: process.env.NEXTAUTH_URL
       ? `${process.env.NEXTAUTH_URL}/api/wallet`

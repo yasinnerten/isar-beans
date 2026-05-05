@@ -1,6 +1,6 @@
-pple Wallet Integration Warnings (Isar Beans)
+Apple Wallet Integration Warnings (grabthebeans)
 
-This document highlights **critical constraints, architecture decisions, and pitfalls** when working with Apple Wallet (PassKit) for the Isar Beans loyalty system.
+This document highlights **critical constraints, architecture decisions, and pitfalls** when working with Apple Wallet (PassKit) for the grabthebeans loyalty system.
 
 ---
 

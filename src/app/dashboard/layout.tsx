@@ -60,8 +60,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <aside className="w-64 bg-[#5c3316] text-white flex flex-col fixed h-full z-40">
         <div className="p-6 border-b border-[#7d4a1e]">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">☕</span>
-            <span className="font-bold text-lg">Isar Beans</span>
+            <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-7 w-auto rounded" />
+            <span className="font-bold text-lg">grabthebeans</span>
           </Link>
           {shop && (
             <div className="mt-3">

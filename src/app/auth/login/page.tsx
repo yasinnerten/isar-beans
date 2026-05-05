@@ -35,8 +35,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#fdf6ee] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-4xl block mb-3">☕</Link>
-          <h1 className="text-2xl font-bold text-[#5c3316]">Isar Beans</h1>
+          <Link href="/" className="block mb-3"><img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-12 w-auto mx-auto rounded" /></Link>
+          <h1 className="text-2xl font-bold text-[#5c3316]">grabthebeans</h1>
           <p className="text-[#7d4a1e] mt-1">Coffee shop login</p>
         </div>
 

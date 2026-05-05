@@ -111,7 +111,7 @@ function ScanContent() {
           <div className="text-7xl mb-6">☕</div>
           <h1 className="text-3xl font-bold text-[#5c3316] mb-3">Collect your bean!</h1>
           <p className="text-[#7d4a1e] mb-8">
-            You scanned an Isar Beans QR code. Add your name/email (optional) to track your beans across visits.
+            You scanned an grabthebeans QR code. Add your name/email (optional) to track your beans across visits.
           </p>
           <div className="max-w-sm mx-auto space-y-4 text-left mb-6">
             <div>
@@ -174,7 +174,7 @@ function ScanContent() {
             <div className="rounded-2xl p-6 text-white coffee-gradient shadow-xl">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <div className="text-xs text-amber-200 uppercase tracking-widest">Isar Beans</div>
+                  <div className="text-xs text-amber-200 uppercase tracking-widest">grabthebeans</div>
                   <div className="text-lg font-bold">{result.shopName}</div>
                 </div>
                 <div className="text-3xl">☕</div>
@@ -237,7 +237,7 @@ export default function ScanPage() {
     <div className="min-h-screen bg-[#fdf6ee] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <span className="text-2xl font-bold text-[#5c3316]">☕ Isar Beans</span>
+          <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-8 w-auto mx-auto mb-2 rounded" />
         </div>
         <div className="bean-card p-8">
           <Suspense fallback={<div className="text-center py-8 text-[#7d4a1e]">Loading... ☕</div>}>

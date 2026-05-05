@@ -3,8 +3,18 @@ import "./globals.css";
 import "leaflet/dist/leaflet.css";
 
 export const metadata: Metadata = {
-  title: "Isar Beans – Coffee Loyalty App",
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
+  title: "grabthebeans – Coffee Loyalty App",
   description: "Collect beans, earn free coffee. The loyalty app powered by Apple Wallet.",
+  icons: {
+    icon: "/grabthebeans-logo.png",
+    apple: "/grabthebeans-logo.png",
+  },
+  openGraph: {
+    title: "grabthebeans – Coffee Loyalty App",
+    description: "Collect beans, earn free coffee. The loyalty app powered by Apple Wallet.",
+    images: ["/grabthebeans-logo.png"],
+  },
 };
 
 export default function RootLayout({

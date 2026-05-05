@@ -62,7 +62,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-[#5c3316]">
             Good morning{shop ? `, ${shop.name}` : ""} ☕
           </h1>
-          <p className="text-[#7d4a1e] mt-1">Welcome to your Isar Beans dashboard</p>
+          <p className="text-[#7d4a1e] mt-1">Welcome to your grabthebeans dashboard</p>
         </div>
       </div>
 

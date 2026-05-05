@@ -8,8 +8,8 @@ export default function HomePage() {
       <nav className="bg-[#5c3316] text-white sticky top-0 z-50 shadow-md">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">☕</span>
-            <span className="text-xl font-bold tracking-wide">Isar Beans</span>
+            <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-8 w-auto rounded" />
+            <span className="text-xl font-bold tracking-wide">grabthebeans</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="#how-it-works" className="text-amber-200 hover:text-white transition-colors text-sm">
@@ -34,13 +34,13 @@ export default function HomePage() {
       {/* Hero */}
       <section className="coffee-gradient text-white py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="text-7xl mb-6">☕</div>
+          <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-24 w-auto mx-auto mb-6 rounded-xl" />
           <h1 className="text-5xl font-bold mb-6 leading-tight">
             Collect Beans.<br />
             <span className="text-amber-200">Earn Free Coffee.</span>
           </h1>
           <p className="text-xl text-amber-100 mb-10 max-w-2xl mx-auto">
-            Isar Beans is the loyalty app for coffee shops.
+            grabthebeans is the loyalty app for coffee shops.
             Scan a QR code, collect beans, and your rewards live right in your Apple Wallet.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -82,7 +82,7 @@ export default function HomePage() {
       <section id="how-it-works" className="py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-[#5c3316] text-center mb-4">
-            How Isar Beans Works
+            How grabthebeans Works
           </h2>
           <p className="text-center text-[#7d4a1e] mb-14 text-lg">Three simple steps to free coffee</p>
 
@@ -92,7 +92,7 @@ export default function HomePage() {
               <div className="text-sm font-bold text-amber-600 mb-2 uppercase tracking-widest">Step 1</div>
               <h3 className="text-xl font-bold text-[#5c3316] mb-3">Scan the QR</h3>
               <p className="text-[#7d4a1e]">
-                Use your iPhone camera to scan the Isar Beans QR code at your favourite coffee shop. No app needed.
+                Use your iPhone camera to scan the grabthebeans QR code at your favourite coffee shop. No app needed.
               </p>
             </div>
             <div className="bean-card p-8 text-center">
@@ -180,9 +180,9 @@ export default function HomePage() {
       {/* Map */}
       <section id="map" className="py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#5c3316] text-center mb-4">🗺 Find Isar Beans Shops</h2>
+          <h2 className="text-3xl font-bold text-[#5c3316] text-center mb-4">🗺 Find grabthebeans Shops</h2>
           <p className="text-center text-[#7d4a1e] mb-10">
-            Discover which coffee shops accept Isar Beans right now
+            Discover which coffee shops accept grabthebeans right now
           </p>
           <div style={{ height: "450px" }} className="rounded-2xl overflow-hidden shadow-lg border-2 border-amber-200">
             <ShopsMapWrapper />
@@ -210,7 +210,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-[#3b1f0d] text-amber-200 py-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="text-2xl font-bold mb-2">☕ Isar Beans</div>
+          <div className="text-2xl font-bold mb-2">grabthebeans</div>
           <p className="text-amber-400 text-sm">The loyalty app for coffee lovers.</p>
           <div className="flex justify-center gap-6 mt-4 text-sm">
             <Link href="/auth/login" className="hover:text-white transition-colors">Shop Login</Link>
