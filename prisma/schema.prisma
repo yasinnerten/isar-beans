@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Shop {
+  id              String    @id @default(cuid())
+  name            String
+  address         String?
+  lat             Float?
+  lng             Float?
+  email           String    @unique
+  passwordHash    String
+  logoUrl         String?
+  beansBalance    Int       @default(0)
+  rewardThreshold Int       @default(10)
+  description     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  approvals       BeanApproval[]
+  subscriptions   Subscription[]
+  walletCards     WalletCard[]
+}
+
+model Customer {
+  id          String   @id @default(cuid())
+  name        String?
+  email       String?  @unique
+  phone       String?
+  deviceId    String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  walletCards WalletCard[]
+  approvals   BeanApproval[]
+}
+
+model WalletCard {
+  id              String   @id @default(cuid())
+  serialNumber    String   @unique @default(cuid())
+  authToken       String   @default(cuid())
+  beansCount      Int      @default(0)
+  uniqueCode      String   @unique
+  passTypeId      String   @default("pass.com.isarbeans.loyalty")
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+
+  shopId          String
+  shop            Shop     @relation(fields: [shopId], references: [id])
+  customerId      String
+  customer        Customer @relation(fields: [customerId], references: [id])
+
+  @@unique([shopId, customerId])
+}
+
+model BeanApproval {
+  id          String            @id @default(cuid())
+  status      String            @default("pending")
+  beansAmount Int               @default(1)
+  uniqueCode  String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  shopId      String
+  shop        Shop              @relation(fields: [shopId], references: [id])
+  customerId  String
+  customer    Customer          @relation(fields: [customerId], references: [id])
+}
+
+model Subscription {
+  id          String   @id @default(cuid())
+  plan        String
+  beansPerDay Int
+  priceEur    Int
+  status      String   @default("active")
+  stripeSubId String?
+  startDate   DateTime @default(now())
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id])
+}

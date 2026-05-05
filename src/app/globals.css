@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fdf6ee;
+  --foreground: #3b1a08;
+  --coffee-50: #fdf6ee;
+  --coffee-100: #f5e6d0;
+  --coffee-200: #e8c9a0;
+  --coffee-300: #d4a56a;
+  --coffee-400: #c08040;
+  --coffee-500: #a0622a;
+  --coffee-600: #7d4a1e;
+  --coffee-700: #5c3316;
+  --coffee-800: #3b1f0d;
+  --coffee-900: #1e0d05;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.coffee-gradient {
+  background: linear-gradient(135deg, #5c3316 0%, #a0622a 50%, #d4a56a 100%);
+}
+
+.bean-card {
+  background: white;
+  border: 2px solid #e8c9a0;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(92, 51, 22, 0.12);
+}
+
