@@ -7,7 +7,7 @@
     "build": "next build",
     "build:standalone": "next build",
     "start": "next start",
-    "start:prod": "DATABASE_URL=file:$PWD/dev.db node .next/standalone/server.js",
+    "start:prod": "mkdir -p .next/standalone/.next/static && cp -r .next/static/* .next/standalone/.next/static/ 2>/dev/null || true && cp -r public .next/standalone/public 2>/dev/null || true && DATABASE_URL=file:$PWD/dev.db node .next/standalone/server.js",
     "test": "node scripts/smoke-tests.mjs",
     "test:seed": "node scripts/seed-test-user.mjs",
     "test:build-run": "bash scripts/build-test-run.sh",

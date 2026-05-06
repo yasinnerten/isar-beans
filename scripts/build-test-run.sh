@@ -25,6 +25,9 @@ npm run build
 
 echo "==> Copying public assets into standalone output..."
 cp -r "${PROJECT_DIR}/public" "${PROJECT_DIR}/.next/standalone/public" 2>/dev/null || true
+echo "==> Copying static chunks into standalone output..."
+mkdir -p "${PROJECT_DIR}/.next/standalone/.next/static"
+cp -r "${PROJECT_DIR}/.next/static/"* "${PROJECT_DIR}/.next/standalone/.next/static/" 2>/dev/null || true
 
 echo "==> Seeding test user..."
 node scripts/seed-test-user.mjs

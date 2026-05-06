@@ -6,17 +6,19 @@
 
 import { spawn } from "child_process";
 import { setTimeout } from "timers/promises";
+import { execSync } from "child_process";
 
 const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
 const PROJECT_DIR = new URL("..", import.meta.url).pathname;
 
 async function request(path, opts = {}) {
   const res = await fetch(`${BASE_URL}${path}`, opts);
-  const body =
-    opts.method === "POST"
-      ? await res.json().catch(() => null)
-      : null;
-  return { status: res.status, body };
+  const contentType = res.headers.get("content-type") || "";
+  let body = null;
+  if (contentType.includes("application/json")) {
+    body = await res.json().catch(() => null);
+  }
+  return { status: res.status, body, headers: res.headers };
 }
 
 let failures = 0;
@@ -40,11 +42,22 @@ async function runTests() {
   const logo = await request("/grabthebeans-logo.png");
   assert(logo.status === 200, `GET /grabthebeans-logo.png returns 200 (got ${logo.status})`);
 
-  // 3. Shops map API
+  // 3. _next/static chunk (critical for CSS/JS)
+  const html = await (await fetch(`${BASE_URL}/`)).text();
+  const chunkMatch = html.match(/_next\/static\/chunks\/[^"\']+/);
+  if (chunkMatch) {
+    const chunkPath = "/" + chunkMatch[0];
+    const chunk = await request(chunkPath);
+    assert(chunk.status === 200, `GET ${chunkPath} returns 200 (got ${chunk.status})`);
+  } else {
+    assert(false, "Could not find _next/static chunk in HTML to test");
+  }
+
+  // 4. Shops map API
   const map = await request("/api/shops/map");
   assert(map.status === 200, `GET /api/shops/map returns 200 (got ${map.status})`);
 
-  // 4. Register a new shop
+  // 5. Register a new shop
   const randomEmail = `smoke-${Date.now()}@example.com`;
   const register = await request("/api/shop/register", {
     method: "POST",
@@ -57,7 +70,7 @@ async function runTests() {
   });
   assert(register.status === 200, `POST /api/shop/register returns 200 (got ${register.status})`);
 
-  // 5. Login with seeded test user
+  // 6. Login with seeded test user — capture real cookie
   const login = await request("/api/shop/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -68,17 +81,20 @@ async function runTests() {
   });
   assert(login.status === 200, `POST /api/shop/login (test user) returns 200 (got ${login.status})`);
 
-  // 6. Auth-protected endpoint rejects unauthenticated
+  // 7. Auth-protected endpoint rejects unauthenticated
   const meNoAuth = await request("/api/shop/me");
   assert(meNoAuth.status === 401, `GET /api/shop/me (no auth) returns 401 (got ${meNoAuth.status})`);
 
-  // 7. Auth-protected endpoint accepts authenticated
-  const cookies = login.body?.ok !== false ? "isar-session=test-cookie" : "";
-  const meWithAuth = await request("/api/shop/me", {
-    headers: { cookie: cookies },
-  });
-  // We are using a fake cookie, so it will still fail, but we just care it doesn't crash
-  assert(meWithAuth.status === 401 || meWithAuth.status === 200, `GET /api/shop/me (with cookie) responds (${meWithAuth.status})`);
+  // 8. Auth-protected endpoint accepts real cookie
+  const setCookie = login.headers.get("set-cookie");
+  if (setCookie) {
+    const meWithAuth = await request("/api/shop/me", {
+      headers: { cookie: setCookie },
+    });
+    assert(meWithAuth.status === 200, `GET /api/shop/me (real cookie) returns 200 (got ${meWithAuth.status})`);
+  } else {
+    assert(false, "Login did not set a cookie");
+  }
 
   console.log("\n--- Results ---");
   if (failures > 0) {
@@ -90,6 +106,16 @@ async function runTests() {
 }
 
 let serverProcess;
+
+async function copyStaticFiles() {
+  try {
+    execSync(`mkdir -p "${PROJECT_DIR}/.next/standalone/.next/static"`);
+    execSync(`cp -r "${PROJECT_DIR}/.next/static/"* "${PROJECT_DIR}/.next/standalone/.next/static/" 2>/dev/null || true`);
+    execSync(`cp -r "${PROJECT_DIR}/public" "${PROJECT_DIR}/.next/standalone/public" 2>/dev/null || true`);
+  } catch {
+    // ignore
+  }
+}
 
 async function startServer() {
   return new Promise((resolve, reject) => {
@@ -134,6 +160,8 @@ async function startServer() {
 }
 
 async function main() {
+  console.log("Preparing standalone server for smoke tests...");
+  await copyStaticFiles();
   console.log("Starting standalone server for smoke tests...");
   await startServer();
   await setTimeout(2000); // warm-up
