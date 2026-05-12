@@ -1,224 +1,150 @@
 import Link from "next/link";
 import ShopsMapWrapper from "@/components/ShopsMapWrapper";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#fdf6ee]">
-      {/* Navigation */}
-      <nav className="bg-[#5c3316] text-white sticky top-0 z-50 shadow-md">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-8 w-auto rounded" />
-            <span className="text-xl font-bold tracking-wide">grabthebeans</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="#how-it-works" className="text-amber-200 hover:text-white transition-colors text-sm">
-              How it works
-            </Link>
-            <Link href="#map" className="text-amber-200 hover:text-white transition-colors text-sm">
-              Find shops
-            </Link>
-            <Link href="/auth/login" className="text-amber-200 hover:text-white transition-colors text-sm">
-              Shop Login
-            </Link>
-            <Link
-              href="/auth/register"
-              className="bg-amber-400 hover:bg-amber-300 text-[#3b1a08] px-4 py-2 rounded-full text-sm font-semibold transition-colors"
-            >
-              Register Shop
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-cream text-coffee-900">
+      <Navbar />
 
       {/* Hero */}
-      <section className="coffee-gradient text-white py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-24 w-auto mx-auto mb-6 rounded-xl" />
-          <h1 className="text-5xl font-bold mb-6 leading-tight">
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-4xl px-5 pt-16 pb-20 text-center sm:pt-24">
+          <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-white shadow-sm ring-1 ring-coffee-100">
+            <img src="/grabthebeans-logo.png" alt="grabthebeans" className="h-14 w-14 object-contain" />
+          </div>
+          <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-coffee-900 sm:text-6xl">
             Collect Beans.<br />
-            <span className="text-amber-200">Earn Free Coffee.</span>
+            <span className="text-coffee-500">Earn Free Coffee.</span>
           </h1>
-          <p className="text-xl text-amber-100 mb-10 max-w-2xl mx-auto">
+          <p className="mx-auto mt-6 max-w-xl text-lg text-coffee-600">
             grabthebeans is the loyalty app for coffee shops.
             Scan a QR code, collect beans, and your rewards live right in your Apple Wallet.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="#how-it-works"
-              className="bg-amber-400 hover:bg-amber-300 text-[#3b1a08] px-8 py-4 rounded-full font-bold text-lg transition-colors shadow-lg"
-            >
-              🫘 How it works
-            </Link>
-            <Link
-              href="/auth/register"
-              className="bg-white/20 hover:bg-white/30 text-white border-2 border-white/50 px-8 py-4 rounded-full font-bold text-lg transition-colors"
-            >
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href="/auth/register" className="btn-primary">
               Register your shop + 50 free beans
             </Link>
+            <a href="#how-it-works" className="btn-ghost">
+              How it works
+            </a>
           </div>
-        </div>
-      </section>
 
-      {/* Stats bar */}
-      <section className="bg-[#5c3316] text-white py-10">
-        <div className="max-w-4xl mx-auto px-4 grid grid-cols-3 gap-8 text-center">
-          <div>
-            <div className="text-4xl font-bold text-amber-300">50</div>
-            <div className="text-amber-100 mt-1">Free beans on signup</div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-amber-300">🍎</div>
-            <div className="text-amber-100 mt-1">Apple Wallet powered</div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-amber-300">QR</div>
-            <div className="text-amber-100 mt-1">Instant scan &amp; collect</div>
+          <div className="mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-6 border-t border-coffee-100 pt-8 text-left">
+            <Stat value="50" label="Free beans on signup" />
+            <Stat value="🍎" label="Apple Wallet powered" />
+            <Stat value="QR" label="Instant scan & collect" />
           </div>
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="py-20 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#5c3316] text-center mb-4">
-            How grabthebeans Works
-          </h2>
-          <p className="text-center text-[#7d4a1e] mb-14 text-lg">Three simple steps to free coffee</p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bean-card p-8 text-center">
-              <div className="text-5xl mb-4">📱</div>
-              <div className="text-sm font-bold text-amber-600 mb-2 uppercase tracking-widest">Step 1</div>
-              <h3 className="text-xl font-bold text-[#5c3316] mb-3">Scan the QR</h3>
-              <p className="text-[#7d4a1e]">
-                Use your iPhone camera to scan the grabthebeans QR code at your favourite coffee shop. No app needed.
-              </p>
-            </div>
-            <div className="bean-card p-8 text-center">
-              <div className="text-5xl mb-4">☕</div>
-              <div className="text-sm font-bold text-amber-600 mb-2 uppercase tracking-widest">Step 2</div>
-              <h3 className="text-xl font-bold text-[#5c3316] mb-3">Show your code</h3>
-              <p className="text-[#7d4a1e]">
-                A unique coffee-themed code appears in your Apple Wallet card. Show it to the barista. They approve your bean in seconds.
-              </p>
-            </div>
-            <div className="bean-card p-8 text-center">
-              <div className="text-5xl mb-4">🎁</div>
-              <div className="text-sm font-bold text-amber-600 mb-2 uppercase tracking-widest">Step 3</div>
-              <h3 className="text-xl font-bold text-[#5c3316] mb-3">Earn rewards</h3>
-              <p className="text-[#7d4a1e]">
-                Beans stack up in your Wallet card. Reach the shop threshold and claim your free coffee or discount!
-              </p>
-            </div>
+      <section id="how-it-works" className="bg-sand py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mx-auto max-w-xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">How grabthebeans Works</h2>
+            <p className="mt-3 text-coffee-600">Three simple steps to free coffee</p>
+          </div>
+          <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+            {[
+              { icon: "📱", title: "Scan the QR", desc: "Use your iPhone camera to scan the grabthebeans QR code at your favourite coffee shop. No app needed." },
+              { icon: "☕", title: "Show your code", desc: "A unique coffee-themed code appears in your Apple Wallet card. Show it to the barista. They approve your bean in seconds." },
+              { icon: "🎁", title: "Earn rewards", desc: "Beans stack up in your Wallet card. Reach the shop threshold and claim your free coffee or discount!" },
+            ].map((s, i) => (
+              <div key={i} className="surface p-7">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sand text-2xl">{s.icon}</div>
+                <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-coffee-500">Step {i + 1}</p>
+                <h3 className="mt-1 text-xl font-bold tracking-tight">{s.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-coffee-600">{s.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* For shop owners */}
-      <section className="bg-[#f5e6d0] py-20 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-[#5c3316] mb-6">☕ For Coffee Shop Owners</h2>
-              <ul className="space-y-4">
-                {[
-                  "Simple web dashboard – no special hardware",
-                  "Approve bean collections with one click",
-                  "Set your own reward threshold",
-                  "Buy beans in bulk or subscribe for daily beans",
-                  "See all your loyal customers at a glance",
-                  "Get your shop listed on the map",
-                  "Start with 50 free beans on registration",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="text-amber-500 text-xl mt-0.5">✓</span>
-                    <span className="text-[#5c3316]">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/auth/register"
-                className="inline-block mt-8 bg-[#5c3316] hover:bg-[#7d4a1e] text-white px-8 py-4 rounded-full font-bold text-lg transition-colors"
-              >
-                Register your shop — it&apos;s free ☕
-              </Link>
+      {/* For Shop Owners */}
+      <section className="py-20">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 md:grid-cols-2 md:items-center">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">For Coffee Shop Owners</h2>
+            <p className="mt-3 text-coffee-600">Everything you need to reward loyal customers</p>
+            <ul className="mt-7 space-y-3">
+              {[
+                "Simple web dashboard – no special hardware",
+                "Approve bean collections with one click",
+                "Set your own reward threshold",
+                "Buy beans in bulk or subscribe for daily beans",
+                "See all your loyal customers at a glance",
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-coffee-900 text-[11px] font-bold text-cream">✓</span>
+                  <span className="text-coffee-800">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <Link href="/auth/register" className="btn-primary mt-8 inline-block">
+              Register your shop — it&apos;s free ☕
+            </Link>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="surface p-6">
+              <p className="text-xs font-semibold uppercase tracking-wider text-coffee-500">Starter</p>
+              <p className="mt-1 text-3xl font-bold tracking-tight">€50<span className="text-sm font-normal text-coffee-500">/mo</span></p>
+              <p className="mt-2 text-sm text-coffee-600">50 beans / day</p>
             </div>
-            <div className="bean-card p-8">
-              <div className="text-center mb-6">
-                <div className="text-6xl mb-2">🫘</div>
-                <h3 className="text-xl font-bold text-[#5c3316]">Subscription Plans</h3>
-                <p className="text-[#7d4a1e] text-sm mt-1">Scale with your café</p>
-              </div>
-              <div className="space-y-4">
-                <div className="border-2 border-amber-300 rounded-xl p-4 bg-amber-50">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="font-bold text-[#5c3316]">Starter</div>
-                      <div className="text-sm text-[#7d4a1e]">50 beans / day</div>
-                    </div>
-                    <div className="text-2xl font-bold text-amber-700">€50<span className="text-sm font-normal">/mo</span></div>
-                  </div>
-                </div>
-                <div className="border-2 border-[#a0622a] rounded-xl p-4 bg-amber-100 relative">
-                  <div className="absolute -top-3 right-4 bg-[#5c3316] text-white text-xs px-3 py-1 rounded-full">Popular</div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="font-bold text-[#5c3316]">Pro</div>
-                      <div className="text-sm text-[#7d4a1e]">100 beans / day</div>
-                    </div>
-                    <div className="text-2xl font-bold text-amber-700">€100<span className="text-sm font-normal">/mo</span></div>
-                  </div>
-                </div>
-                <p className="text-xs text-center text-[#7d4a1e] mt-2">Or buy beans individually in the dashboard</p>
-              </div>
+            <div className="surface relative p-6 ring-2 ring-coffee-900">
+              <span className="absolute -top-2.5 right-4 rounded-full bg-coffee-900 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-cream">Popular</span>
+              <p className="text-xs font-semibold uppercase tracking-wider text-coffee-500">Pro</p>
+              <p className="mt-1 text-3xl font-bold tracking-tight">€100<span className="text-sm font-normal text-coffee-500">/mo</span></p>
+              <p className="mt-2 text-sm text-coffee-600">100 beans / day</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Map */}
-      <section id="map" className="py-20 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#5c3316] text-center mb-4">🗺 Find grabthebeans Shops</h2>
-          <p className="text-center text-[#7d4a1e] mb-10">
-            Discover which coffee shops accept grabthebeans right now
-          </p>
-          <div style={{ height: "450px" }} className="rounded-2xl overflow-hidden shadow-lg border-2 border-amber-200">
+      <section id="map" className="bg-sand py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mx-auto max-w-xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Find grabthebeans Shops</h2>
+            <p className="mt-3 text-coffee-600">Discover which coffee shops accept grabthebeans right now</p>
+          </div>
+          <div className="mt-10 rounded-2xl overflow-hidden shadow-lg border border-coffee-200" style={{ height: 450 }}>
             <ShopsMapWrapper />
           </div>
         </div>
       </section>
 
       {/* Sign up CTA */}
-      <section className="coffee-gradient py-20 px-4 text-white text-center">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-6xl mb-6">🎉</div>
-          <h2 className="text-4xl font-bold mb-4">Sign up &amp; get 50 free beans</h2>
-          <p className="text-amber-100 text-lg mb-8">
-            Register your coffee shop today and start rewarding your customers immediately. No credit card required.
-          </p>
-          <Link
-            href="/auth/register"
-            className="bg-amber-400 hover:bg-amber-300 text-[#3b1a08] px-10 py-4 rounded-full font-bold text-xl transition-colors shadow-xl inline-block"
-          >
-            Get started — 50 beans free ☕
-          </Link>
+      <section className="py-20">
+        <div className="mx-auto max-w-3xl px-5">
+          <div className="surface coffee-gradient p-12 text-center text-cream">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Sign up & get 50 free beans</h2>
+            <p className="mx-auto mt-3 max-w-lg text-coffee-100/90">
+              Register your coffee shop today and start rewarding your customers immediately. No credit card required.
+            </p>
+            <Link
+              href="/auth/register"
+              className="mt-7 inline-block rounded-full bg-cream px-6 py-3 font-semibold text-coffee-900 transition hover:bg-white"
+            >
+              Get started — 50 beans free ☕ →
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#3b1f0d] text-amber-200 py-10 px-4">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="text-2xl font-bold mb-2">grabthebeans</div>
-          <p className="text-amber-400 text-sm">The loyalty app for coffee lovers.</p>
-          <div className="flex justify-center gap-6 mt-4 text-sm">
-            <Link href="/auth/login" className="hover:text-white transition-colors">Shop Login</Link>
-            <Link href="/auth/register" className="hover:text-white transition-colors">Register</Link>
-            <Link href="/scan" className="hover:text-white transition-colors">Scan QR</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
+    </div>
+  );
+}
+
+function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <div>
+      <p className="text-2xl font-bold tracking-tight text-coffee-900">{value}</p>
+      <p className="mt-1 text-xs text-coffee-600">{label}</p>
     </div>
   );
 }

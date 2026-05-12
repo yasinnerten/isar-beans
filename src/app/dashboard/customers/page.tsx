@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ProgressBar } from "@/components/ProgressBar";
 
 interface WalletCard {
   id: string;
@@ -60,25 +61,25 @@ export default function CustomersPage() {
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-6xl space-y-6">
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg text-sm font-medium">
+        <div className="fixed top-6 right-6 z-50 rounded-xl bg-green-600 px-6 py-3 text-sm font-medium text-white shadow-lg">
           {toast}
         </div>
       )}
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#5c3316]">Customers 👥</h1>
-        <p className="text-[#7d4a1e] mt-1">All customers who have collected beans at your shop</p>
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-coffee-900 sm:text-3xl">Customers 👥</h1>
+        <p className="mt-1 text-coffee-600">All customers who have collected beans at your shop</p>
       </div>
 
       {loading ? (
-        <div className="text-[#7d4a1e]">Loading... ☕</div>
+        <div className="text-coffee-600">Loading... ☕</div>
       ) : cards.length === 0 ? (
-        <div className="bean-card p-12 text-center">
+        <div className="surface p-12 text-center">
           <div className="text-5xl mb-4">☕</div>
-          <h2 className="text-xl font-bold text-[#5c3316] mb-2">No customers yet</h2>
-          <p className="text-[#7d4a1e]">Share your QR code to get customers collecting beans!</p>
+          <h2 className="text-xl font-bold text-coffee-900 mb-2">No customers yet</h2>
+          <p className="text-coffee-600">Share your QR code to get customers collecting beans!</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -87,30 +88,29 @@ export default function CustomersPage() {
               ? Math.min(100, Math.round((card.beansCount / shop.rewardThreshold) * 100))
               : 0;
             return (
-              <div key={card.id} className="bean-card p-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div key={card.id} className="surface p-6">
+                <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                   <div className="flex items-center gap-4">
-                    <div className="bg-amber-100 rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold text-amber-700">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-lg font-bold text-coffee-700">
                       {(card.customer.name || card.customer.email || "A")[0].toUpperCase()}
                     </div>
                     <div>
-                      <p className="font-semibold text-[#3b1a08]">
+                      <p className="font-semibold text-coffee-900">
                         {card.customer.name || card.customer.email || "Anonymous"}
                       </p>
-                      <p className="text-xs text-gray-400 font-mono">{card.uniqueCode}</p>
-                      <div className="flex items-center gap-3 mt-1.5">
-                        <span className="text-sm text-[#5c3316] font-medium">
+                      <p className="text-xs text-coffee-500 font-mono">{card.uniqueCode}</p>
+                      <div className="mt-1.5 flex items-center gap-3">
+                        <span className="text-sm font-medium text-coffee-900">
                           {card.beansCount} / {shop?.rewardThreshold || "?"} beans
                         </span>
-                        <div className="w-24 bg-amber-100 rounded-full h-2">
-                          <div className="bg-amber-500 rounded-full h-2" style={{ width: `${pct}%` }} />
+                        <div className="w-24">
+                          <ProgressBar value={card.beansCount} max={shop?.rewardThreshold || 1} />
                         </div>
-                        <span className="text-xs text-amber-600">{pct}%</span>
+                        <span className="text-xs text-coffee-600">{pct}%</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Gift beans */}
                   <div className="flex items-center gap-2">
                     <input
                       type="number"
@@ -123,11 +123,11 @@ export default function CustomersPage() {
                           [card.customer.id]: parseInt(e.target.value) || 1,
                         }))
                       }
-                      className="w-16 border-2 border-amber-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
+                      className="w-16 rounded-xl border border-coffee-200 px-2 py-1.5 text-center text-sm focus:border-coffee-500 focus:outline-none"
                     />
                     <button
                       onClick={() => giftBeans(card.customer.id, card.id)}
-                      className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                      className="rounded-full bg-coffee-900 px-4 py-1.5 text-sm font-semibold text-cream hover:bg-coffee-800"
                     >
                       🫘 Gift beans
                     </button>

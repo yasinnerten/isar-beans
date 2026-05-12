@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { ProgressBar } from "@/components/ProgressBar";
 
 interface Shop {
   id: string;
@@ -56,148 +57,120 @@ export default function DashboardPage() {
   const recentCards = cards.slice(0, 5);
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-[#5c3316]">
-            Good morning{shop ? `, ${shop.name}` : ""} ☕
-          </h1>
-          <p className="text-[#7d4a1e] mt-1">Welcome to your grabthebeans dashboard</p>
-        </div>
+    <div className="mx-auto max-w-6xl space-y-6">
+      <h1 className="text-2xl font-bold tracking-tight text-coffee-900 sm:text-3xl">
+        Good morning{shop ? `, ${shop.name}` : ""} ☕
+      </h1>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <StatCard icon="🫘" label="Beans balance" value={shop?.beansBalance ?? 0} link={{ href: "/dashboard/beans", label: "Buy more →" }} />
+        <StatCard icon="✅" label="Pending approvals" value={approvals.length} link={approvals.length > 0 ? { href: "/dashboard/approvals", label: "Review now →" } : undefined} />
+        <StatCard icon="👥" label="Loyal customers" value={cards.length} link={{ href: "/dashboard/customers", label: "View all →" }} />
       </div>
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bean-card p-6">
-          <div className="text-4xl mb-2">🫘</div>
-          <div className="text-3xl font-bold text-[#5c3316]">{shop?.beansBalance ?? "—"}</div>
-          <div className="text-[#7d4a1e] text-sm mt-1">Beans balance</div>
-          <Link href="/dashboard/beans" className="text-amber-600 text-sm hover:underline mt-2 inline-block">
-            Buy more →
-          </Link>
-        </div>
-        <div className="bean-card p-6">
-          <div className="text-4xl mb-2">✅</div>
-          <div className="text-3xl font-bold text-[#5c3316]">{approvals.length}</div>
-          <div className="text-[#7d4a1e] text-sm mt-1">Pending approvals</div>
-          {approvals.length > 0 && (
-            <Link href="/dashboard/approvals" className="text-amber-600 text-sm hover:underline mt-2 inline-block">
-              Review now →
-            </Link>
-          )}
-        </div>
-        <div className="bean-card p-6">
-          <div className="text-4xl mb-2">👥</div>
-          <div className="text-3xl font-bold text-[#5c3316]">{cards.length}</div>
-          <div className="text-[#7d4a1e] text-sm mt-1">Loyal customers</div>
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* QR Code */}
-        <div className="bean-card p-6">
-          <h2 className="text-lg font-bold text-[#5c3316] mb-4">📲 Your Shop QR Code</h2>
-          <p className="text-sm text-[#7d4a1e] mb-4">
-            Print or display this QR code in your shop. Customers scan it to collect beans.
-          </p>
-          {qr ? (
-            <div className="text-center">
-              <img src={qr.qr} alt="Shop QR Code" className="mx-auto rounded-xl border-2 border-amber-200" style={{ width: 200 }} />
-              <p className="text-xs text-gray-500 mt-2 break-all">{qr.url}</p>
-            </div>
-          ) : (
-            <div className="h-48 bg-amber-50 rounded-xl animate-pulse" />
-          )}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="surface p-6">
+          <h2 className="text-lg font-bold tracking-tight text-coffee-900">Your Shop QR Code</h2>
+          <p className="mt-1 text-sm text-coffee-600">Print or display this QR code in your shop. Customers scan it to collect beans.</p>
+          <div className="mt-5 flex flex-col items-center">
+            {qr ? (
+              <>
+                <img src={qr.qr} alt="Shop QR Code" width={200} height={200} className="rounded-xl border border-coffee-200" />
+                <p className="mt-3 break-all text-center text-xs text-coffee-500">{qr.url}</p>
+              </>
+            ) : (
+              <div className="flex h-[200px] w-[200px] animate-pulse items-center justify-center rounded-xl border border-coffee-200 bg-sand">
+                <span className="text-xs text-coffee-600">Loading QR... ☕</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Pending approvals */}
-        <div className="bean-card p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-[#5c3316]">⏳ Pending Approvals</h2>
-            <Link href="/dashboard/approvals" className="text-sm text-amber-600 hover:underline">
-              View all
-            </Link>
+        <div className="surface p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold tracking-tight text-coffee-900">Pending Approvals</h2>
+            <Link href="/dashboard/approvals" className="text-sm font-semibold text-coffee-800 hover:text-coffee-900">View all</Link>
           </div>
           {approvals.length === 0 ? (
-            <div className="text-center py-8 text-[#7d4a1e]">
-              <div className="text-4xl mb-2">✨</div>
-              <p className="text-sm">No pending approvals. All caught up!</p>
-            </div>
+            <p className="py-10 text-center text-coffee-500">No pending approvals. All caught up!</p>
           ) : (
-            <div className="space-y-3">
+            <ul className="space-y-2">
               {approvals.slice(0, 3).map((a) => (
-                <div key={a.id} className="flex items-center justify-between bg-amber-50 rounded-xl p-3">
-                  <div>
-                    <p className="font-mono text-sm font-medium text-[#5c3316]">{a.uniqueCode}</p>
-                    <p className="text-xs text-gray-500">{a.customer.name || a.customer.deviceId || "Anonymous"}</p>
+                <li key={a.id} className="flex items-center gap-3 rounded-xl border border-coffee-100 p-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-mono text-sm font-semibold text-coffee-900">{a.uniqueCode}</p>
+                    <p className="text-xs text-coffee-500">{a.customer.name || a.customer.deviceId || "Anonymous"}</p>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleApproval(a.id, "approve")}
-                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-                    >
-                      ✓ Approve
-                    </button>
-                    <button
-                      onClick={() => handleApproval(a.id, "reject")}
-                      className="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-                    >
-                      ✗
-                    </button>
-                  </div>
-                </div>
+                  <button
+                    onClick={() => handleApproval(a.id, "approve")}
+                    className="rounded-full bg-coffee-900 px-3 py-1.5 text-sm font-semibold text-cream hover:bg-coffee-800"
+                  >
+                    ✓
+                  </button>
+                  <button
+                    onClick={() => handleApproval(a.id, "reject")}
+                    className="rounded-full border border-coffee-200 px-3 py-1.5 text-sm font-semibold text-coffee-700 hover:bg-sand"
+                  >
+                    ✗
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </div>
       </div>
 
-      {/* Recent customers */}
       {recentCards.length > 0 && (
-        <div className="bean-card p-6 mt-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-[#5c3316]">🧾 Recent Customer Activity</h2>
-            <Link href="/dashboard/customers" className="text-sm text-amber-600 hover:underline">
-              View all
-            </Link>
+        <div className="surface p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold tracking-tight text-coffee-900">Recent Customer Activity</h2>
+            <Link href="/dashboard/customers" className="text-sm font-semibold text-coffee-800 hover:text-coffee-900">View all</Link>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-[#7d4a1e] border-b border-amber-200">
-                  <th className="pb-2 pr-4">Customer</th>
-                  <th className="pb-2 pr-4">Beans</th>
-                  <th className="pb-2 pr-4">Progress</th>
-                  <th className="pb-2">Code</th>
+              <thead className="text-left text-xs uppercase tracking-wider text-coffee-500">
+                <tr>
+                  <th className="pb-3 font-semibold">Customer</th>
+                  <th className="pb-3 font-semibold">Beans</th>
+                  <th className="pb-3 font-semibold">Progress</th>
+                  <th className="pb-3 font-semibold">Code</th>
                 </tr>
               </thead>
               <tbody>
-                {recentCards.map((c) => {
-                  const pct = shop ? Math.min(100, Math.round((c.beansCount / shop.rewardThreshold) * 100)) : 0;
-                  return (
-                    <tr key={c.id} className="border-b border-amber-50 hover:bg-amber-50">
-                      <td className="py-2 pr-4 text-[#3b1a08]">
-                        {c.customer.name || c.customer.email || "Anonymous"}
-                      </td>
-                      <td className="py-2 pr-4 font-bold text-[#5c3316]">
-                        {c.beansCount} / {shop?.rewardThreshold || "?"}
-                      </td>
-                      <td className="py-2 pr-4">
-                        <div className="w-24 bg-amber-100 rounded-full h-2">
-                          <div
-                            className="bg-amber-500 rounded-full h-2"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </td>
-                      <td className="py-2 font-mono text-xs text-gray-500">{c.uniqueCode}</td>
-                    </tr>
-                  );
-                })}
+                {recentCards.map((c) => (
+                  <tr key={c.id} className="border-t border-coffee-100">
+                    <td className="py-3 font-semibold text-coffee-900">{c.customer.name || c.customer.email || "Anonymous"}</td>
+                    <td className="py-3 text-coffee-700">{c.beansCount} / {shop?.rewardThreshold ?? "?"}</td>
+                    <td className="py-3"><div className="w-24"><ProgressBar value={c.beansCount} max={shop?.rewardThreshold ?? 1} /></div></td>
+                    <td className="py-3 font-mono text-xs text-coffee-600">{c.uniqueCode}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+function StatCard({
+  icon, label, value, link,
+}: {
+  icon: string; label: string; value: number;
+  link?: { href: string; label: string };
+}) {
+  return (
+    <div className="surface surface-hover p-6">
+      <div className="flex items-center justify-between">
+        <span className="text-xl">{icon}</span>
+        <p className="text-3xl font-extrabold tracking-tight text-coffee-900">{value}</p>
+      </div>
+      <p className="mt-2 text-xs uppercase tracking-wider text-coffee-500">{label}</p>
+      {link && (
+        <Link href={link.href} className="mt-3 inline-block text-sm font-semibold text-coffee-800 hover:text-coffee-900">
+          {link.label}
+        </Link>
       )}
     </div>
   );

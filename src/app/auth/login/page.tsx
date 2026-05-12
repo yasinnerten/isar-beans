@@ -32,64 +32,56 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdf6ee] flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="block mb-3"><img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-12 w-auto mx-auto rounded" /></Link>
-          <h1 className="text-2xl font-bold text-[#5c3316]">grabthebeans</h1>
-          <p className="text-[#7d4a1e] mt-1">Coffee shop login</p>
-        </div>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-cream px-4 py-10">
+      <div className="w-full max-w-sm">
+        <Link href="/" className="mb-8 flex flex-col items-center">
+          <img src="/grabthebeans-logo.png" alt="grabthebeans" className="h-12 w-12 object-contain" />
+          <span className="mt-3 text-lg font-bold tracking-tight text-coffee-900">grabthebeans</span>
+          <span className="text-sm text-coffee-600">Coffee shop login</span>
+        </Link>
 
-        <div className="bean-card p-8">
-          <h2 className="text-xl font-bold text-[#5c3316] mb-6 text-center">
+        <div className="surface p-7">
+          <h2 className="mb-5 text-center text-lg font-bold tracking-tight text-coffee-900">
             Sign in to your dashboard
           </h2>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-5 text-sm">
+            <div className="mb-5 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-200">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[#5c3316] mb-1.5">
-                Email address
-              </label>
+              <label className="mb-1.5 block text-xs font-semibold text-coffee-700">Email address</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500 bg-white"
+                className="gtb-input"
                 placeholder="you@yourcafe.com"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#5c3316] mb-1.5">
-                Password
-              </label>
+              <label className="mb-1.5 block text-xs font-semibold text-coffee-700">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500 bg-white"
+                className="gtb-input"
                 placeholder="••••••••"
               />
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#5c3316] hover:bg-[#7d4a1e] disabled:opacity-60 text-white py-3 rounded-lg font-semibold transition-colors"
-            >
+            <button type="submit" disabled={loading} className="btn-primary w-full">
               {loading ? "Signing in..." : "Sign in ☕"}
             </button>
           </form>
 
-          <p className="text-center text-sm text-[#7d4a1e] mt-6">
+          <p className="mt-6 text-center text-sm text-coffee-600">
             No account yet?{" "}
-            <Link href="/auth/register" className="text-[#a0622a] hover:underline font-medium">
+            <Link href="/auth/register" className="font-semibold text-coffee-900 hover:underline">
               Register your shop
             </Link>
           </p>

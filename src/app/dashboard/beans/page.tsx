@@ -45,51 +45,38 @@ export default function BeansPage() {
     setLoading(false);
   }
 
-  const stripeEnabled = typeof window !== "undefined"; // We'd check from API
+  const stripeEnabled = typeof window !== "undefined";
 
   return (
-    <div>
+    <div className="mx-auto max-w-6xl space-y-6">
       {toast && (
-        <div
-          className={`fixed top-6 right-6 z-50 px-6 py-3 rounded-xl shadow-lg text-white text-sm font-medium ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          }`}
-        >
+        <div className={`fixed top-6 right-6 z-50 rounded-xl px-6 py-3 text-sm font-medium text-white shadow-lg ${toast.type === "success" ? "bg-green-600" : "bg-red-600"}`}>
           {toast.msg}
         </div>
       )}
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#5c3316]">Buy Beans 🫘</h1>
-        <p className="text-[#7d4a1e] mt-1">Top up your bean balance to reward customers</p>
-      </div>
+      <h1 className="text-2xl font-bold tracking-tight text-coffee-900 sm:text-3xl">Buy Beans 🫘</h1>
+      <p className="text-coffee-600">Top up your bean balance to reward customers</p>
 
-      {/* Current balance */}
-      <div className="bean-card p-6 mb-8 flex items-center gap-6">
-        <div className="bg-amber-100 rounded-2xl p-4 text-center">
-          <div className="text-3xl">🫘</div>
-        </div>
+      <div className="surface flex items-center gap-4 p-6">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-2xl">🫘</div>
         <div>
-          <p className="text-sm text-[#7d4a1e]">Current bean balance</p>
-          <p className="text-4xl font-bold text-[#5c3316]">{shop?.beansBalance ?? "—"}</p>
-          <p className="text-xs text-gray-500 mt-0.5">beans available to give to customers</p>
+          <p className="text-3xl font-extrabold tracking-tight text-coffee-900">{shop?.beansBalance ?? "—"}</p>
+          <p className="text-sm text-coffee-600">Current bean balance</p>
         </div>
       </div>
 
-      {/* Bean packs */}
-      <h2 className="text-lg font-bold text-[#5c3316] mb-4">One-time bean packs</h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {BEAN_PACKS.map((pack) => (
-          <div key={pack.amount} className="bean-card p-6 text-center hover:border-amber-400 transition-colors">
-            <div className="text-3xl mb-2">🫘</div>
-            <h3 className="font-bold text-[#5c3316]">{pack.label}</h3>
-            <p className="text-3xl font-bold text-amber-700 my-2">{pack.amount}</p>
-            <p className="text-sm text-[#7d4a1e] mb-4">beans</p>
-            <p className="text-lg font-bold text-[#5c3316] mb-4">€{pack.price}</p>
+          <div key={pack.amount} className="surface surface-hover flex flex-col p-6">
+            <p className="text-2xl">🫘</p>
+            <h3 className="mt-2 text-base font-bold tracking-tight text-coffee-900">{pack.label}</h3>
+            <p className="mt-1 text-sm text-coffee-600">{pack.amount} beans</p>
+            <p className="mt-3 text-2xl font-bold tracking-tight text-coffee-900">€{pack.price}</p>
             <button
               disabled={loading}
               onClick={() => buyPack(pack.amount)}
-              className="w-full bg-[#5c3316] hover:bg-[#7d4a1e] disabled:opacity-50 text-white py-2.5 rounded-xl text-sm font-semibold transition-colors"
+              className="btn-primary mt-auto w-full"
             >
               {stripeEnabled ? "Buy now" : "Add (demo)"}
             </button>
@@ -97,13 +84,10 @@ export default function BeansPage() {
         ))}
       </div>
 
-      <div className="bean-card p-6 bg-amber-50">
-        <p className="text-sm text-[#7d4a1e]">
-          <span className="font-semibold text-[#5c3316]">💡 Note:</span> In demo mode, beans are added directly to your balance.
-          Connect Stripe in your <code className="bg-amber-100 px-1 rounded">.env</code> file to enable real payments.
-          For recurring beans, check out our{" "}
-          <a href="/dashboard/subscriptions" className="text-amber-600 hover:underline">subscription plans</a>.
-        </p>
+      <div className="rounded-2xl border border-coffee-100 bg-sand p-4 text-sm text-coffee-700">
+        ℹ️ In demo mode, beans are added directly to your balance.
+        Connect Stripe in your <code className="bg-cream px-1 rounded">.env</code> file to enable real payments.
+        For recurring beans, check out our <a href="/dashboard/subscriptions" className="font-semibold underline">subscription plans</a>.
       </div>
     </div>
   );

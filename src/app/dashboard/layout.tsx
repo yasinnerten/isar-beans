@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   const navItems = [
-    { href: "/dashboard", label: "Overview", icon: "📊" },
+    { href: "/dashboard", label: "Overview", icon: "📊", exact: true },
     { href: "/dashboard/approvals", label: "Approvals", icon: "✅" },
     { href: "/dashboard/customers", label: "Customers", icon: "👥" },
     { href: "/dashboard/beans", label: "Buy Beans", icon: "🫘" },
@@ -48,60 +48,60 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fdf6ee] flex items-center justify-center">
-        <div className="text-[#5c3316] text-xl">Loading... ☕</div>
+      <div className="min-h-screen bg-coffee-50 flex items-center justify-center">
+        <div className="text-coffee-900 text-xl">Loading... ☕</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#fdf6ee] flex">
+    <div className="min-h-screen bg-coffee-50 flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#5c3316] text-white flex flex-col fixed h-full z-40">
-        <div className="p-6 border-b border-[#7d4a1e]">
+      <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-coffee-100 bg-white">
+        <div className="border-b border-coffee-100 p-5">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/grabthebeans-logo.png" alt="grabthebeans logo" className="h-7 w-auto rounded" />
-            <span className="font-bold text-lg">grabthebeans</span>
+            <img src="/grabthebeans-logo.png" alt="grabthebeans" className="h-8 w-8 object-contain" />
+            <span className="font-bold tracking-tight text-coffee-900">grabthebeans</span>
           </Link>
           {shop && (
-            <div className="mt-3">
-              <p className="text-sm text-amber-200 truncate font-medium">{shop.name}</p>
-              <p className="text-xs text-amber-400 truncate">{shop.email}</p>
+            <div className="mt-4">
+              <p className="truncate text-sm font-semibold text-coffee-900">{shop.name}</p>
+              <p className="truncate text-xs text-coffee-500">{shop.email}</p>
             </div>
           )}
         </div>
 
-        {/* Bean balance chip */}
         {shop && (
-          <div className="px-6 py-4 border-b border-[#7d4a1e]">
-            <div className="bg-amber-800 rounded-xl p-3 text-center">
-              <div className="text-2xl font-bold text-amber-300">{shop.beansBalance}</div>
-              <div className="text-xs text-amber-400 mt-0.5">beans balance</div>
-            </div>
+          <div className="m-4 rounded-2xl border border-coffee-100 bg-sand p-4">
+            <p className="text-3xl font-bold tracking-tight text-coffee-900">{shop.beansBalance}</p>
+            <p className="mt-0.5 text-xs uppercase tracking-wider text-coffee-600">beans balance</p>
           </div>
         )}
 
-        <nav className="flex-1 py-4">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-6 py-3 text-sm transition-colors ${
-                pathname === item.href
-                  ? "bg-[#7d4a1e] text-white font-semibold"
-                  : "text-amber-200 hover:bg-[#7d4a1e] hover:text-white"
-              }`}
-            >
-              <span>{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
+        <nav className="flex-1 space-y-1 px-3">
+          {navItems.map((item) => {
+            const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
+                  active
+                    ? "bg-coffee-900 font-semibold text-cream"
+                    : "text-coffee-700 hover:bg-sand"
+                }`}
+              >
+                <span className="text-base">{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="p-4 border-t border-[#7d4a1e]">
+        <div className="border-t border-coffee-100 p-4">
           <button
             onClick={logout}
-            className="w-full text-amber-300 hover:text-white text-sm py-2 transition-colors"
+            className="w-full rounded-xl border border-coffee-200 px-3 py-2 text-left text-sm text-coffee-700 hover:bg-sand"
           >
             Sign out →
           </button>

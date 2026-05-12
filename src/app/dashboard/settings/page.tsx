@@ -61,105 +61,93 @@ export default function SettingsPage() {
     setSaving(false);
   }
 
-  if (loading) return <div className="text-[#7d4a1e]">Loading... ☕</div>;
+  if (loading) return <div className="text-coffee-600">Loading... ☕</div>;
 
   return (
-    <div>
+    <div className="mx-auto max-w-xl space-y-6">
       {toast && (
-        <div
-          className={`fixed top-6 right-6 z-50 px-6 py-3 rounded-xl shadow-lg text-white text-sm font-medium ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          }`}
-        >
+        <div className={`fixed top-6 right-6 z-50 rounded-xl px-6 py-3 text-sm font-medium text-white shadow-lg ${toast.type === "success" ? "bg-green-600" : "bg-red-600"}`}>
           {toast.msg}
         </div>
       )}
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#5c3316]">Settings ⚙️</h1>
-        <p className="text-[#7d4a1e] mt-1">Configure your coffee shop profile and rewards</p>
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-coffee-900 sm:text-3xl">Settings ⚙️</h1>
+        <p className="mt-1 text-coffee-600">Configure your coffee shop profile and rewards</p>
       </div>
 
-      <form onSubmit={handleSave} className="max-w-xl space-y-6">
-        <div className="bean-card p-6 space-y-5">
-          <h2 className="font-bold text-[#5c3316] text-lg border-b border-amber-200 pb-3">
+      <form onSubmit={handleSave} className="space-y-6">
+        <div className="surface p-6 space-y-5">
+          <h2 className="text-lg font-bold text-coffee-900 border-b border-coffee-100 pb-3">
             Shop details
           </h2>
 
-          <div>
-            <label className="block text-sm font-medium text-[#5c3316] mb-1.5">Shop name</label>
+          <label className="block">
+            <span className="mb-1.5 block text-xs font-semibold text-coffee-700">Shop name</span>
             <input
               type="text"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               required
-              className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500"
+              className="gtb-input"
             />
-          </div>
+          </label>
 
-          <div>
-            <label className="block text-sm font-medium text-[#5c3316] mb-1.5">
-              Shop description
-            </label>
+          <label className="block">
+            <span className="mb-1.5 block text-xs font-semibold text-coffee-700">Shop description</span>
             <textarea
               value={form.description || ""}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               rows={3}
-              className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500"
+              className="gtb-input"
               placeholder="Tell customers what makes your coffee special..."
             />
-          </div>
+          </label>
 
-          <div>
-            <label className="block text-sm font-medium text-[#5c3316] mb-1.5">Address</label>
+          <label className="block">
+            <span className="mb-1.5 block text-xs font-semibold text-coffee-700">Address</span>
             <input
               type="text"
               value={form.address || ""}
               onChange={(e) => setForm({ ...form, address: e.target.value })}
-              className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500"
+              className="gtb-input"
               placeholder="e.g. Isartalstr. 7, 80469 Munich"
             />
-          </div>
+          </label>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#5c3316] mb-1.5">
-                Latitude (for map)
-              </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-semibold text-coffee-700">Latitude</span>
               <input
                 type="number"
                 step="any"
                 value={form.lat ?? ""}
                 onChange={(e) => setForm({ ...form, lat: e.target.value ? parseFloat(e.target.value) : null })}
-                className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500"
+                className="gtb-input"
                 placeholder="48.1374"
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#5c3316] mb-1.5">
-                Longitude
-              </label>
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-semibold text-coffee-700">Longitude</span>
               <input
                 type="number"
                 step="any"
                 value={form.lng ?? ""}
                 onChange={(e) => setForm({ ...form, lng: e.target.value ? parseFloat(e.target.value) : null })}
-                className="w-full border-2 border-amber-200 rounded-lg px-4 py-3 text-[#3b1a08] focus:outline-none focus:border-amber-500"
+                className="gtb-input"
                 placeholder="11.5755"
               />
-            </div>
+            </label>
           </div>
         </div>
 
-        <div className="bean-card p-6 space-y-5">
-          <h2 className="font-bold text-[#5c3316] text-lg border-b border-amber-200 pb-3">
+        <div className="surface p-6 space-y-5">
+          <h2 className="text-lg font-bold text-coffee-900 border-b border-coffee-100 pb-3">
             Reward configuration
           </h2>
 
-          <div>
-            <label className="block text-sm font-medium text-[#5c3316] mb-1.5">
-              Reward threshold (beans for free coffee)
-            </label>
+          <label className="block">
+            <span className="mb-1.5 block text-xs font-semibold text-coffee-700">Reward threshold (beans for free coffee)</span>
             <div className="flex items-center gap-4">
               <input
                 type="range"
@@ -168,23 +156,23 @@ export default function SettingsPage() {
                 step="1"
                 value={form.rewardThreshold}
                 onChange={(e) => setForm({ ...form, rewardThreshold: parseInt(e.target.value) })}
-                className="flex-1 accent-amber-600"
+                className="flex-1 accent-coffee-800"
               />
-              <div className="bg-amber-100 rounded-xl px-4 py-2 font-bold text-[#5c3316] text-lg min-w-[64px] text-center">
+              <div className="min-w-[64px] rounded-xl bg-sand px-4 py-2 text-center text-lg font-bold text-coffee-900">
                 {form.rewardThreshold}
               </div>
             </div>
-            <p className="text-xs text-[#7d4a1e] mt-2">
+            <p className="mt-2 text-xs text-coffee-600">
               Customers need <strong>{form.rewardThreshold} beans</strong> to earn a free coffee or discount.
               This will be reflected on their Apple Wallet card.
             </p>
-          </div>
+          </label>
         </div>
 
         <button
           type="submit"
           disabled={saving}
-          className="w-full bg-[#5c3316] hover:bg-[#7d4a1e] disabled:opacity-60 text-white py-3 rounded-xl font-semibold transition-colors"
+          className="btn-primary w-full"
         >
           {saving ? "Saving..." : "Save settings ✓"}
         </button>
