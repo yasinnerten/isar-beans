@@ -60,10 +60,33 @@ else
 fi
 
 echo ""
+echo "==> Cleaning up old Tailscale tunnel..."
+tailscale funnel reset 2>/dev/null || true
+tailscale serve reset 2>/dev/null || true
+
+echo "==> Stopping any existing production servers on ports 3000 / 3002..."
+for port in 3000 3002; do
+  pid=$(lsof -ti :"${port}" 2>/dev/null || true)
+  if [[ -n "${pid}" ]]; then
+    echo "    Killing process ${pid} on port ${port}"
+    kill "${pid}" 2>/dev/null || true
+    sleep 1
+  fi
+done
+
+echo ""
 echo "==> Starting production server..."
 echo "    Local:   http://localhost:3002"
 echo "    Public:  https://isar-beans.yasinnerten.com"
 echo ""
+
+# Warn if cloudflared connector is not running
+if ! pgrep -q cloudflared 2>/dev/null; then
+  echo "⚠️  cloudflared is not running. The Cloudflare tunnel will not work until you start it:"
+  echo "       cloudflared tunnel run"
+  echo "   or via your system service (launchctl / systemd)."
+  echo ""
+fi
 
 # Start server in the foreground (Cloudflare tunnel handles public ingress)
 NODE_ENV=production PORT=3002 node .next/standalone/server.js
