@@ -3,7 +3,7 @@ import "./globals.css";
 import "leaflet/dist/leaflet.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3002"),
   title: "grabthebeans – Coffee Loyalty App",
   description: "Collect beans, earn free coffee. The loyalty app powered by Apple Wallet.",
   icons: {

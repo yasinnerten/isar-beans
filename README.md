@@ -24,7 +24,7 @@ npm run build
 npm run start:prod
 ```
 
-The standalone server will be available at `http://localhost:3000`.
+The standalone server will be available at `http://localhost:3002`.
 
 ## Useful Scripts
 

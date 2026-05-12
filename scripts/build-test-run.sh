@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# build-test-run.sh — Build, test, commit/push, then start production + Tailscale tunnel.
+# build-test-run.sh — Build, test, commit/push, then start the production server.
+# The app is exposed via an external Cloudflare tunnel (do not edit tunnel config here).
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
@@ -59,47 +60,16 @@ else
 fi
 
 echo ""
-echo "==> Resetting any existing Tailscale serve/funnel..."
-tailscale funnel reset 2>/dev/null || true
-tailscale serve reset 2>/dev/null || true
-
 echo "==> Starting production server..."
-echo "    Local:   http://localhost:3000"
+echo "    Local:   http://localhost:3002"
+echo "    Public:  https://isar-beans.yasinnerten.com"
 echo ""
 
-# Start server in background so we can setup funnel
-NODE_ENV=production PORT=3000 node .next/standalone/server.js &
-SERVER_PID=$!
-
-# Give the server a few seconds to start
-sleep 4
-
-echo "==> Setting up Tailscale tunnel..."
-TAILSCALE_HOST=$(tailscale status --json 2>/dev/null | python3 -c 'import sys,json; print(json.load(sys.stdin)["Self"]["DNSName"].rstrip("."))' 2>/dev/null || echo "unknown")
-
-if tailscale funnel --bg 3000 2>/dev/null; then
-  echo "✓ Tailscale funnel active (internet-facing)"
-  echo "    Public:  https://${TAILSCALE_HOST}"
-else
-  echo "⚠ Tailscale funnel failed, falling back to tailscale serve (tailnet-only)..."
-  tailscale serve --bg 3000 2>/dev/null || true
-  echo "✓ Tailscale serve active (tailnet-only)"
-  echo "    Tailnet: https://${TAILSCALE_HOST}"
-fi
+# Start server in the foreground (Cloudflare tunnel handles public ingress)
+NODE_ENV=production PORT=3002 node .next/standalone/server.js
 
 echo ""
-echo "========================================"
-echo " App is LIVE!"
-echo "========================================"
-echo " Local:   http://localhost:3000"
-echo " Tunnel:  https://${TAILSCALE_HOST}"
-echo ""
-echo " Test user credentials:"
-echo "   Email:    test@grabthebeans.com"
-echo "   Password: testpass123"
-echo "========================================"
-echo ""
-echo "Press Ctrl+C to stop the server and tunnel."
+echo " Server stopped."
 
-# Wait for the server to exit
-wait $SERVER_PID
+# Note: If you need the server to persist after closing this terminal,
+# run it via a process manager (e.g., pm2, systemd) instead of this script.

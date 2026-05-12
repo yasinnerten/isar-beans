@@ -6,7 +6,7 @@ export async function GET() {
   const shop = await getSession();
   if (!shop) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const url = `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/scan?shop=${shop.id}`;
+  const url = `${process.env.NEXTAUTH_URL || "http://localhost:3002"}/scan?shop=${shop.id}`;
   const qrDataUrl = await QRCode.toDataURL(url, {
     color: { dark: "#5c3316", light: "#fdf6ee" },
     width: 300,

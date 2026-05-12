@@ -8,7 +8,7 @@ import { spawn } from "child_process";
 import { setTimeout } from "timers/promises";
 import { execSync } from "child_process";
 
-const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3002";
 const PROJECT_DIR = new URL("..", import.meta.url).pathname;
 
 async function request(path, opts = {}) {
@@ -122,7 +122,7 @@ async function startServer() {
     const env = {
       ...process.env,
       NODE_ENV: "production",
-      PORT: "3000",
+      PORT: "3002",
       DATABASE_URL:
         process.env.DATABASE_URL || `file:${PROJECT_DIR}/dev.db`,
     };
@@ -143,7 +143,7 @@ async function startServer() {
 
     serverProcess.stdout.on("data", (d) => {
       const msg = d.toString();
-      if (msg.includes("Ready") || msg.includes("3000")) {
+      if (msg.includes("Ready") || msg.includes("3002")) {
         resolveOnce();
       }
     });
